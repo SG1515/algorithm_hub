@@ -1,53 +1,37 @@
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.Scanner;
+
+
 
 public class Main {
    
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) {
 		Main T = new Main();
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		String str = st.nextToken();
-		char s = st.nextToken().charAt(0);
-		System.out.println(T.solution(str, s));
+		Scanner sc = new Scanner(System.in);
+		String str = sc.next();
+		System.out.println(T.solution(str));
 	}
 	
-	public String solution(String str, char s) {
+	public String solution(String str) {
 		String result = "";
-	
-		int strLength = str.length();
-		int[] distance = new int[strLength];
-		int count = 1000;
-
+		int cnt = 1;
 		
-		for (int i=0; i<str.length(); i++) {
-			if(s == str.charAt(i)) {
-				count = 0;
+		String checkStr = str + " ";
+		char[] arrStr = checkStr.toCharArray();
+		
+		for(int i=0; i<checkStr.length()-1; i++) {
+			int j = i+1;
+			if(arrStr[i] == arrStr[j]) {
+				cnt++; 
 			} else {
-				count++;
+				if(cnt == 1) {
+					result += arrStr[i];
+				} else {
+					result += arrStr[i] + String.valueOf(cnt);
+				}
+				cnt = 1;
 			}
-			distance[i] = count; 
 		}
 		
-		count = 1000;
-		for(int i=str.length()-1; i>=0; i--) {
-			if(s == str.charAt(i)) {
-				count = 0;
-			} else {
-				count ++;
-			}
-			
-			distance[i] = Math.min(distance[i], count);
-			
-		}
-
-		StringBuilder sb = new StringBuilder();
-		for(int x : distance) {
-			sb.append(x).append(' ');
-		}
-		result = sb.toString().trim();
 		return result;
 	}
 
