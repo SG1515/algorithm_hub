@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.util.StringTokenizer;
-
+import java.util.HashMap;
 
 public class Main {
 
@@ -12,41 +12,35 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());
-		int k = Integer.parseInt(st.nextToken());
+		String str = br.readLine();
 		
-		st = new StringTokenizer(br.readLine());
-		int[] arr = new int[n];
-		for(int i=0; i<n; i++) {
-			arr[i] = Integer.parseInt(st.nextToken());
-		}
-
-		System.out.println(T.solution(n, k, arr));
+		System.out.println(T.solution(n, str));
 	}
 	
-	public int solution(int n, int k, int[] arr) {
-		int result = 0;
+	public String solution(int n, String str) {
+		String result = "";
 		
-		int lt = 0;
-		int rt = 0;
-		for(int i=0; i<arr.length; i++) {
-			lt = i; 
-			rt = lt+1;
-			int tmp = 0;
-			tmp += arr[lt];
+		HashMap<String, Integer> map = new HashMap<>();
 		
-			if(tmp == k) {
-				result++;
-			} else {
-				while (tmp <= k && rt < arr.length) {
-					tmp += arr[rt];
-					if(tmp == k) result++;
-					rt++;
-				}	
-			}
-			
+		String[] people = {"A", "B", "C", "D", "E"};
+				
+		for(int i=0; i<people.length; i++) {
+			map.put(people[i], 0);
+		}
+		
+		for(int i=0; i<str.length(); i++) {
+			String s = String.valueOf(str.charAt(i));
+			map.put(s, map.get(s)+1);
 			
 		}
 		
+		int value = 0;
+		for(int i=0; i<map.size(); i++) {
+			if(value < map.get(people[i])) {
+				value = map.get(people[i]);
+				result = people[i];
+			}
+		}
 		
 		
 		return result;
