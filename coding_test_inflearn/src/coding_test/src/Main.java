@@ -12,7 +12,7 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());
-		int window = Integer.parseInt(st.nextToken());
+		int k = Integer.parseInt(st.nextToken());
 		
 		st = new StringTokenizer(br.readLine());
 		int[] arr = new int[n];
@@ -20,24 +20,34 @@ public class Main {
 			arr[i] = Integer.parseInt(st.nextToken());
 		}
 
-		System.out.println(T.solution(n, window, arr));
+		System.out.println(T.solution(n, k, arr));
 	}
 	
-	public int solution(int n, int window, int[] arr) {
+	public int solution(int n, int k, int[] arr) {
 		int result = 0;
 		
-		
-		for(int i=window-1; i<n; i++) {
+		int lt = 0;
+		int rt = 0;
+		for(int i=0; i<arr.length; i++) {
+			lt = i; 
+			rt = lt+1;
 			int tmp = 0;
-			int count = 0;
-			
-			while(count < window) {
-				tmp += arr[i - count];
-				count++;
+			tmp += arr[lt];
+		
+			if(tmp == k) {
+				result++;
+			} else {
+				while (tmp <= k && rt < arr.length) {
+					tmp += arr[rt];
+					if(tmp == k) result++;
+					rt++;
+				}	
 			}
 			
-			result = Math.max(result, tmp);
+			
 		}
+		
+		
 		
 		return result;
 	}
