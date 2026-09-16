@@ -3,37 +3,32 @@ import java.util.Scanner;
 
 
 public class Main {
-   
+	
 	public static void main(String[] args) {
 		Main T = new Main();
 		Scanner sc = new Scanner(System.in);
-		String str = sc.next();
-		System.out.println(T.solution(str));
+		int tc = Integer.parseInt(sc.next());
+		
+		System.out.println(T.solution(tc));
+		
 	}
 	
-	public String solution(String str) {
-		String result = "";
-		int cnt = 1;
+	public String solution(int tc) {
+		StringBuilder sb = new StringBuilder();
 		
-		String checkStr = str + " ";
-		char[] arrStr = checkStr.toCharArray();
+		int arr[] = new int[tc];
+		arr[0] = 1;
+		arr[1] = 1;
 		
-		for(int i=0; i<checkStr.length()-1; i++) {
-			int j = i+1;
-			if(arrStr[i] == arrStr[j]) {
-				cnt++; 
-			} else {
-				if(cnt == 1) {
-					result += arrStr[i];
-				} else {
-					result += arrStr[i] + String.valueOf(cnt);
-				}
-				cnt = 1;
-			}
+		for(int i=2; i<tc; i++) {
+			arr[i] = arr[i-1] + arr[i-2];
 		}
 		
-		return result;
+		for(int x : arr) {
+			sb.append(x).append(" ");
+		}
+		
+		return sb.toString();
 	}
-
 	
 }
